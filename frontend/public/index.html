@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="description" content="Real-time AI-powered Indian Sign Language recognition, translation, and 3D avatar animation system with emotion-aware multilingual output." />
+  <meta name="keywords" content="ISL, Indian Sign Language, sign language, translator, AI, machine learning, accessibility" />
+  <meta name="author" content="ISL Translation System" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ISL Translator — AI Sign Language Recognition" />
+  <meta property="og:description" content="Real-time Indian Sign Language recognition with 3D avatar animation" />
+  <meta property="og:type" content="website" />
+
+  <title>ISL Translator — AI Sign Language Recognition</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a1a;
+      color: #e8e8f0;
+      overflow-x: hidden;
+    }
+    /* Loading screen */
+    #root-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: #0a0a1a;
+      transition: opacity 0.4s;
+    }
+    #root-loader.fade-out { opacity: 0; pointer-events: none; }
+    .loader-ring {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(99, 102, 241, 0.2);
+      border-top-color: #818cf8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="root-loader"><div class="loader-ring"></div></div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <script>
+    // Remove loader once React mounts
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new MutationObserver(() => {
+        const root = document.getElementById('root');
+        if (root && root.childNodes.length > 0) {
+          const loader = document.getElementById('root-loader');
+          if (loader) { loader.classList.add('fade-out'); setTimeout(() => loader.remove(), 500); }
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.getElementById('root'), { childList: true });
+    });
+  </script>
+</body>
+</html>
