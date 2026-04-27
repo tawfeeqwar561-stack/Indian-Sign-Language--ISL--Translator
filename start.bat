@@ -1,0 +1,6 @@
+@echo off
+title ISL Translation System
+cd /d "%~dp0frontend"
+echo Starting ISL Translation System...
+echo Opening http://localhost:3000 ...
+npx react-scripts start
