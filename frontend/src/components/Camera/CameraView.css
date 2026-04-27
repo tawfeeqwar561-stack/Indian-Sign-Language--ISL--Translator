@@ -1,0 +1,314 @@
+/* ── Camera Card ───────────────────────────────────────────────── */
+
+.camera-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.meta-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ── Model Status Badge ────────────────────────────────────────── */
+
+.model-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+.model-idle {
+  background: rgba(var(--info-rgb), 0.1);
+  color: var(--info);
+}
+
+.model-loading {
+  background: rgba(var(--warning-rgb), 0.12);
+  color: var(--warning);
+  animation: pulse-badge 1.5s infinite;
+}
+
+.model-ready {
+  background: rgba(var(--success-rgb), 0.12);
+  color: var(--success);
+}
+
+.model-error {
+  background: rgba(var(--danger-rgb), 0.12);
+  color: var(--danger);
+}
+
+/* ── Loading Spinner ───────────────────────────────────────────── */
+
+.loading-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-spinner.large {
+  width: 28px;
+  height: 28px;
+  border-width: 3px;
+}
+
+.model-loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* ── Viewport ──────────────────────────────────────────────────── */
+
+.camera-viewport {
+  flex: 1;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  min-height: 280px;
+}
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scaleX(-1); /* Mirror for selfie view */
+}
+
+.camera-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: scaleX(-1); /* Mirror to match video */
+}
+
+/* ── Scanning Line ─────────────────────────────────────────────── */
+
+.scanning-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+  box-shadow: 0 0 10px var(--accent-primary);
+  opacity: 0.4;
+  z-index: 4;
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* ── Detection Guide ───────────────────────────────────────────── */
+
+.detection-guide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: fade-in 0.5s ease-out;
+}
+
+.guide-frame {
+  width: 55%;
+  height: 65%;
+  position: relative;
+}
+
+.guide-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: var(--accent-primary);
+  border-style: solid;
+  border-width: 0;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 5px var(--accent-primary));
+}
+
+.guide-corner.tl {
+  top: -4px; left: -4px;
+  border-top-width: 4px;
+  border-left-width: 4px;
+  border-top-left-radius: 12px;
+}
+
+.guide-corner.tr {
+  top: -4px; right: -4px;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-top-right-radius: 12px;
+}
+
+.guide-corner.bl {
+  bottom: -4px; left: -4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-bottom-left-radius: 12px;
+}
+
+.guide-corner.br {
+  bottom: -4px; right: -4px;
+  border-bottom-width: 4px;
+  border-right-width: 4px;
+  border-bottom-right-radius: 12px;
+}
+
+.guide-text {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  animation: pulse-badge 2s infinite;
+}
+
+/* ── Placeholder ───────────────────────────────────────────────── */
+
+.camera-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(10, 10, 26, 0.95) 0%, rgba(17, 17, 39, 0.95) 100%);
+  animation: fade-in 0.3s ease-out;
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+  animation: bounce-in 0.5s ease-out;
+}
+
+.placeholder-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.placeholder-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.camera-error {
+  color: var(--danger);
+  font-size: 13px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: rgba(var(--danger-rgb), 0.1);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Controls ──────────────────────────────────────────────────── */
+
+.camera-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.controls-spacer {
+  flex: 1;
+}
+
+.hand-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(var(--success-rgb), 0.12);
+  color: var(--success);
+}
+
+.hand-count {
+  font-family: monospace;
+}
+
+/* ── Active glow animation ─────────────────────────────────────── */
+
+.camera-card.active {
+  border-color: rgba(var(--success-rgb), 0.2);
+}
+
+.camera-card.active .camera-viewport::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 8px var(--danger);
+  animation: pulse-dot 1.5s infinite;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .camera-viewport {
+    min-height: 240px;
+  }
+  .camera-meta {
+    gap: 4px;
+  }
+  .model-badge,
+  .meta-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+}
