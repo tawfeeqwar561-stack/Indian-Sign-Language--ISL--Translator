@@ -1,44 +1,70 @@
 # ═══════════════════════════════════════════════════════════
 # ISL Translation System — .gitignore
-# Keep: frontend/, backend/, ml_pipeline/, docker, README
+# ═══════════════════════════════════════════════════════════
+# ONLY these are tracked in Git:
+#   frontend/    (source code)
+#   backend/     (source code)
+#   ml_pipeline/ (source code)
+#   Dockerfile.backend, Dockerfile.frontend, docker-compose.yml
+#   README.md, .gitignore, .env.example, start.bat
+# Everything else is ignored.
 # ═══════════════════════════════════════════════════════════
 
-# ── Python ────────────────────────────────────────────────
+# ── Ignore everything by default ─────────────────────────
+*
+
+# ── Then whitelist the folders/files we want ─────────────
+!.gitignore
+!README.md
+!.env.example
+!start.bat
+
+# Docker files
+!Dockerfile.backend
+!Dockerfile.frontend
+!docker-compose.yml
+
+# ── Whitelist frontend/ (recursively) ────────────────────
+!frontend/
+!frontend/**
+
+# ── Whitelist backend/ (recursively) ─────────────────────
+!backend/
+!backend/**
+
+# ── Whitelist ml_pipeline/ (recursively) ─────────────────
+!ml_pipeline/
+!ml_pipeline/**
+
+# ═══════════════════════════════════════════════════════════
+# Now IGNORE heavy/generated stuff INSIDE those folders
+# ═══════════════════════════════════════════════════════════
+
+# ── Python caches ────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-*.egg-info/
-*.egg
-dist/
-build/
-.eggs/
 
-# ── Virtual Environments ─────────────────────────────────
+# ── Virtual Environments (anywhere) ──────────────────────
 .venv/
 venv/
-backend/venv/
-backend/venv2/
+venv2/
 env/
 ENV/
 
-# ── Node / Frontend ──────────────────────────────────────
+# ── Node modules ─────────────────────────────────────────
 node_modules/
-frontend/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnp/
 .pnp.js
 
-# ── Environment & Secrets ────────────────────────────────
+# ── Environment / secrets ────────────────────────────────
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-# Keep .env.example as reference
-!.env.example
+.env.*.local
 
 # ── IDE / Editor ─────────────────────────────────────────
 .vscode/
@@ -46,26 +72,22 @@ yarn-error.log*
 *.swp
 *.swo
 *~
-.DS_Store
-Thumbs.db
-desktop.ini
 
 # ── Logs ─────────────────────────────────────────────────
 *.log
-backend/isl_system.log
 
-# ── Database (SQLite) ────────────────────────────────────
-backend/instance/
+# ── Database ─────────────────────────────────────────────
 *.db
 *.sqlite3
+backend/instance/
 
-# ── Generated / Cache ───────────────────────────────────
+# ── Generated / Cached artifacts ─────────────────────────
 backend/saved_models/
 backend/resources/pdfs/*.pdf
 backend/resources/pdfs/.gitkeep
 frontend/tfjs_models/
 
-# ── ML Models & large data ──────────────────────────────
+# ── ML model binaries & large data ──────────────────────
 *.h5
 *.hdf5
 *.pkl
@@ -77,25 +99,24 @@ frontend/tfjs_models/
 *.pb
 *.ckpt
 *.safetensors
-ml_pipeline/data/*.csv
-ml_pipeline/data/*.json
-ml_pipeline/data/*.npy
+*.npy
+*.npz
 
-# ── Docker (runtime) ────────────────────────────────────
-# Keep Dockerfiles and docker-compose.yml
-# Ignore runtime artifacts
-.docker/
-
-# ── OS Files ─────────────────────────────────────────────
+# ── OS files ─────────────────────────────────────────────
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# ── Misc ─────────────────────────────────────────────────
+# ── Build artifacts ──────────────────────────────────────
+dist/
+build/
+coverage/
+.nyc_output/
+*.egg-info/
+*.egg
+.eggs/
 *.bak
 *.tmp
 *.temp
-coverage/
-.nyc_output/
